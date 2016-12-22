@@ -1,0 +1,9 @@
+<phpunit
+        bootstrap="autoload.php"
+        processUncoveredFilesFromWhitelist="false">
+    <testsuites>
+        <testsuite name="base">
+            <file>view/BaseTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
