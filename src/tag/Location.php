@@ -33,27 +33,20 @@ class Location {
             return null;
         }
 
-        $class = $this->getOption('class');
-        if($class){
-            $class = ' class="' . $class . '"';
-        }
+        $ol = '<ol class="breadcrumb">%s</ol>';
+        $li = '<li>%s</li>';
+        $a  = '<a href="%s">%s</a>';
 
         $html = '';
-        $sp = $this->getOption('sp', ' > ');
-
         foreach ($this->items as $item) {
             if($item['url']) {
-                $html .=  <<<ST
- <a href="{$item['url']}"{$class}>{$item['name']}</a> {$sp}
-ST;
+                $link = sprintf($a, $item['url'], $item['name']);
             } else {
-                $html .=  "&nbsp" . $item['name'];
+                $link = $item['name'];
             }
+            $html .= sprintf($li, $link);
         }
 
-        if($html && $this->getOption('wrap')){
-            $html = '<nav>'. $html . '</nav>';
-        }
-        return $html;
+        return sprintf($ol, $html);
     }
 }
