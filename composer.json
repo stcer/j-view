@@ -14,10 +14,20 @@
       "j\\view\\": "src"
     }
   },
+
   "require": {
     "php": ">=5.4.0",
     "stcer/j-core" : "dev-master"
   },
+
+  "suggest": {
+    "symfony/asset": ""
+  },
+
+  "require-dv": {
+    "symfony/asset" : ">=2.7"
+  },
+
   "repositories": [
     {
       "type": "composer",
@@ -32,5 +42,8 @@
 
   "config" : {
     "secure-http" : false
+  },
+  "require-dev": {
+    "symfony/asset": ">=2.7"
   }
 }

@@ -4,6 +4,8 @@ namespace j\view\tag;
 
 use j\base\OptionsTrait;
 use j\base\SingletonTrait;
+use Symfony\Component\Asset\PackageInterface;
+use Symfony\Component\Asset\Packages;
 
 /**
  * Class Js
@@ -19,10 +21,15 @@ class Js  {
     protected $codeIndex = [];
     protected $codeTagOptions = [];
 
-    public $baseUrl = '';
-    public $basePath = '';
-    public $hash = false;
+    /**
+     * @var Packages
+     */
+    public $assetPackages = null;
+    public $assetTypeName = 'js';
 
+    /**
+     * @var string
+     */
     public static $labelFile = '<script type="text/javascript" src="%s"></script>';
     public static $label = '<script type="text/javascript">%s</script>';
 
@@ -90,16 +97,10 @@ class Js  {
         $files = $this->sort($this->files, $this->fileIndex);
         $files = array_unique($files);
         foreach ($files as $file) {
-            if(strpos($file, 'http://') !== 0){
-                $file = $this->baseUrl . $file;
-            } else if($this->hash) {
-                $filePath = $this->basePath . $file;
-                if(file_exists($filePath)){
-                    $hash = md5($file . filemtime($filePath));
-                    $file .= '?r=' . substr($hash, 0, 10);
-                }
+            if(isset($this->assetPackages)){
+                $file = $this->assetPackages->getUrl($file, $this->assetTypeName);
             }
-            $html[] =  sprintf(static::$labelFile, $file);
+            $html[] = sprintf(static::$labelFile, $file);
         }
 
         return implode("\r\n", $html) . "\n";
@@ -122,7 +123,6 @@ class Js  {
             } else {
                 $html .= sprintf(static::$label, $c) . "\n";
             }
-
         }
         return $html;
     }

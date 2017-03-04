@@ -8,6 +8,8 @@ namespace j\view\tag;
  */
 class Css extends Js  {
     protected static $instance;
+    public $assetTypeName = 'css';
+
     public static $labelFile = '<link rel="stylesheet" type="text/css" href="%s" />';
     public static $label = '<style>%s</style>';
 }
