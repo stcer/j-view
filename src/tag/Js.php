@@ -62,6 +62,10 @@ class Js  {
      * @return $this
      */
     function addCode($code, $priority = 0, $hasTag = false){
+        if(!$code){
+            return $this;
+        }
+
         $key = count($this->codes);
         $this->codes[] = $code;
         $this->codeIndex[$key] = $priority;
